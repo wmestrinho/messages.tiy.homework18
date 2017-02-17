@@ -2,8 +2,6 @@ package com.messages.controller;
 
 import com.messages.data.Author;
 import com.messages.repository.AuthorRepo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class AuthorController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @Autowired
     AuthorRepo authorRepo;
@@ -32,8 +30,8 @@ public class AuthorController {
         if (found == null) {
             // no user found, login must fail
 
-            destinationView = "login";
-            data.addAttribute("message", "User/Pass combination not found.");
+            destinationView = "/open/login";
+            data.addAttribute("err_login_msg", "User/Pass combination not found.");
         } else {
 
             session.setAttribute("user", found);

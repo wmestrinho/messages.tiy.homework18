@@ -3,6 +3,7 @@ package com.messages.data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by WagnerMestrinho on 2/9/17.
@@ -14,7 +15,7 @@ public class Messages {
     private long id;
     private String content;
     private String author;
-
+    private Date time;
     public Messages() {
     }
 
@@ -45,5 +46,13 @@ public class Messages {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

@@ -24,11 +24,11 @@ public class Authorize implements Filter {
         // check session
         Author usr = (Author) req.getSession().getAttribute("user");
         boolean authorized = (usr != null);
-        boolean tryingToLogin = req.getRequestURI().endsWith("login.jsp")||req.getRequestURI().endsWith("authenticate");
+        boolean tryingToLogin = req.getRequestURI().endsWith("/open/login.jsp")||req.getRequestURI().endsWith("authenticate");
         if(authorized || tryingToLogin) {
             chain.doFilter(request, response);
         }else{
-            resp.sendRedirect("/login.jsp");
+            resp.sendRedirect("/open/login.jsp");
         }
     }
 

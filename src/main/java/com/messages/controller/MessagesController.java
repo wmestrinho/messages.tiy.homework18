@@ -1,5 +1,6 @@
 package com.messages.controller;
 
+import com.messages.data.Author;
 import com.messages.data.Messages;
 import com.messages.repository.MessagesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import javax.servlet.http.HttpSession;
+import java.util.Calendar;
 
 /**
  * Created by WagnerMestrinho on 2/9/17.
@@ -22,12 +22,19 @@ public class MessagesController {
     @Autowired
     MessagesRepo messagesRepo;
 
-    @RequestMapping(path = "/secure/message/create", method = RequestMethod.POST)
-    public String createMessage(Model dataToJsp,
-                             @RequestParam String author,
-                              @RequestParam String content){
+    @RequestMapping(path = "/secure/write", method = RequestMethod.POST)
+    public String createMessage(Model dataToJsp, HttpSession session,
+                                @RequestParam String content){
 
-        Messages tmp = new Messages(author, content);
+        // same as one-liner below
+        //
+        //      Object userAsObject = session.getAttribute("user");
+        //        Author anAuthor = (Author)userAsObject;
+        //        String userName = anAuthor.getName();
+
+        String author = ((Author)session.getAttribute("user")).getName();
+        Messages tmp = new Messages(content, author);
+        tmp.setTime(Calendar.getInstance().getTime());
 
         messagesRepo.save(tmp);
         //if saved add message
@@ -35,7 +42,7 @@ public class MessagesController {
             dataToJsp.addAttribute("msg_success",
                     String.format( "%s you're Great" , author));
         }
-        return "/secure/write";
+        return "forward:/secure/messages";
     }
 
 
@@ -44,17 +51,8 @@ public class MessagesController {
     public String listMessages(Model xyz){
         String destination = "wall";
         Iterable found = messagesRepo.findAll();
-
-        // convert to lists because i like them
-        Iterator<Messages> itr = found.iterator();
-        List<Messages> data = new ArrayList();
-        while(itr.hasNext()){
-            data.add(itr.next());
-        }
-
         // put list into model
-        xyz.addAttribute("mList", data);
-
+        xyz.addAttribute("mList", found);
         // go to jsp
         return destination;
     }

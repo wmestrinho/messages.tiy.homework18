@@ -18,7 +18,7 @@
     <ul class="nav navbar-nav">
         <li><a href="/open/login.jsp"><h4>Login</h4></a></li>
         <li><a href="/secure/write.jsp"><h4>Start Writing</h4></a></li>
-        <li><a href="/secure/wall.jsp"><h4>Wall</h4></a></li>
+        <li><a href="/secure/messages"><h4>Wall</h4></a></li>
     </ul>
 
 </nav>

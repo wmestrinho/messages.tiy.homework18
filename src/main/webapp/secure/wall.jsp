@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,20 +27,22 @@
     <ul class="nav navbar-nav">
         <li><a href="/open/login.jsp"><h4>Login</h4></a></li>
         <li><a href="/secure/write.jsp"><h4>Start Writing</h4></a></li>
-        <li><a href="/secure/wall.jsp"><h4>Wall</h4></a></li>
+        <li><a href="/secure/messages"><h4>Wall</h4></a></li>
     </ul>
-
 </nav>
 
 <div class="container" align="center">
     <p><h1>LETTUCE SHARE ALL THE THINGS WE ARE GRATEFUL FOR</h1></p>
 </div>
 <div class="container" align="center">
-
-    <c:forEach items="${mList}" var="aMovie">
-
-
-
+    <c:forEach items="${mList}" var="message">
+        <c:set var="now" value="${message.time}" />
+        {<fmt:formatDate type="time"
+                        value="${now}" />}
+        <c:out value="${message.author}"/>
+        :
+        <c:out value="${message.content}"/>
+        <br>
     </c:forEach>
 </div>
 
